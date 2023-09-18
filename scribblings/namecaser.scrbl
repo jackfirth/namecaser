@@ -5,7 +5,7 @@
 
 @title{Namecaser}
 
-@defmodule[namecaser]
+@defmodule[namecaser/base]
 
 Namecaser is a library for converting names between different programming language naming styles.
 

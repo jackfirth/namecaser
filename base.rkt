@@ -28,6 +28,9 @@
    (-> (or/c string? (sequence/c word?)) (and/c kebab-case-ascii-string? immutable?))]
   [lower-kebab-case
    (-> (or/c string? (sequence/c word?)) (and/c kebab-case-ascii-string? immutable?))]
+  [name-words
+   (-> (or/c camel-case-ascii-string? snake-case-ascii-string? kebab-case-ascii-string?)
+       (listof word?))]
   [camel-case-words (-> camel-case-ascii-string? (listof word?))]
   [snake-case-words (-> snake-case-ascii-string? (listof word?))]
   [kebab-case-words (-> kebab-case-ascii-string? (listof word?))]))
@@ -60,13 +63,13 @@
 
 (define (snake-case-ascii-string? v)
   (match v
-    [(pregexp #px"^([[:alpha:]_][[:alnum:]_]*)?$") #true]
+    [(pregexp #px"^([[:alpha:]][[:alnum:]_]*|[[:alpha:]_][[:alnum:]_]+)?$") #true]
     [_ #false]))
 
 
 (define (kebab-case-ascii-string? v)
   (match v
-    [(pregexp #px"^([[:alpha:]-][[:alnum:]-]*)?$") #true]
+    [(pregexp #px"^([[:alpha:]][[:alnum:]-]*|[[:alpha:]-][[:alnum:]-]+)?$") #true]
     [_ #false]))
 
 
@@ -267,6 +270,13 @@
     (check-equal? (lower-kebab-case "check nonempty") "check-nonempty")
     (check-equal? (lower-kebab-case "check non-empty") "check-nonempty")
     (check-equal? (lower-kebab-case "many   spaces") "many-spaces")))
+
+
+(define (name-words name)
+  (cond
+    [(kebab-case-ascii-string? name) (kebab-case-words name)]
+    [(snake-case-ascii-string? name) (snake-case-words name)]
+    [else (camel-case-words name)]))
 
 
 (define (camel-case-words name)
