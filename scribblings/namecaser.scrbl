@@ -1,10 +1,15 @@
 #lang scribble/manual
-@require[@for-label[namecaser
-                    racket/base]]
 
-@title{namecaser}
-@author{jackfirth}
+@(require (for-label namecaser
+                     racket/base))
+
+@title{Namecaser}
 
 @defmodule[namecaser]
 
-Package Description Here
+Namecaser is a library for converting names between different programming language naming styles.
+
+
+@defproc[(upper-camel-case [name (or/c ascii-string? (sequence/c word?))])
+         (and/c camel-case-ascii-string? immutable?)]{
+ Conerts @racket[name] to upper camel case.}
