@@ -1,6 +1,6 @@
 #lang scribble/manual
 
-@(require (for-label namecaser
+@(require (for-label namecaser/base
                      racket/base))
 
 @title{Namecaser}
